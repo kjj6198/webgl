@@ -32,7 +32,5 @@ void main() {
 
 	vec4 testColor = vec4(1.0,0.0,0.0,1.0);
 
-	gl_FragColor = texture2D(u_sampler, distortions);
-	// gl_FragColor = testColor;
-	// gl_PointSize = 10.0;
+	gl_FragColor = texture2D(u_sampler, vec2(distortions.x, v_textureCoords.y));
 }
