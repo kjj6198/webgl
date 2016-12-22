@@ -2,7 +2,7 @@ var path = require('path');
 module.exports={
   context: __dirname,
   entry: {
-    index: "./src/js/index.js",
+    distortion: "./src/js/index1.js",
   },
 
   output:{
