@@ -270,13 +270,13 @@
 /* 3 */
 /***/ function(module, exports) {
 
-	module.exports = "precision mediump float;\n\nvarying vec2 v_textureCoords;\n\nuniform float u_time; // pass time to animate.\nuniform sampler2D u_sampler;\nuniform vec2 u_resolution;\n\n\nvec2 pixel() {\n  return 1.0 / u_resolution;\n}\n\n// make position distortion by sin func.\nfloat distortion(float point,float freq, float speed) {\n  return sin(point * freq + ((3.1415/2.0) * u_time * speed));\n}\n\nvec2 distortions(vec2 pos) {\n\tvec2 intensity = vec2(2.0,1.0) * pixel();\n\n  vec2 waves = vec2(\n    distortion(pos.y,190.0,0.35),\n    distortion(pos.x,100.0,0.4)\n  );\n\n  return pos + (waves * intensity * 1.0);\n}\n\nvoid main() {\n\tvec2 distortions = distortions(v_textureCoords);\n\n\tvec4 testColor = vec4(1.0,0.0,0.0,1.0);\n\n\tgl_FragColor = texture2D(u_sampler, vec2(distortions.x, v_textureCoords.y));\n}"
+	module.exports = "precision mediump float;\n\nvarying vec2 v_textureCoords;\n\nuniform float u_time; // pass time to animate.\nuniform sampler2D u_sampler;\nuniform vec2 u_resolution;\n\n\nvec2 pixel() {\n  return 1.0 / u_resolution;\n}\n\n// make position distortion by sin func.\nfloat distortion(float point,float freq, float speed) {\n  return sin(point * freq + ((3.1415/2.0) * u_time * speed));\n}\n\nvec2 distortions(vec2 pos) {\n\tvec2 intensity = vec2(1.0,1.0) * pixel();\n\n  vec2 waves = vec2(\n    distortion(pos.y,100.0,0.35),\n    distortion(pos.x,100.0,0.4)\n  );\n\n  return pos + (waves * intensity * 1.0);\n}\n\nvoid main() {\n\tvec2 distortions = distortions(v_textureCoords);\n\n\tgl_FragColor = texture2D(u_sampler, vec2(distortions.x, distortions.y));\n}"
 
 /***/ },
 /* 4 */
 /***/ function(module, exports) {
 
-	module.exports = "attribute vec2 a_textureCoords;\nattribute vec4 a_position;\n\nvarying vec2 v_textureCoords;\n\nattribute float a_pointSize;\n\n// convert position to mapping -1 ~ 1\n// vec2 convertCoords(vec2 position, vec2 resolution) {\n// \tvec2 toOne = (position / resolution) * 2.0;\n// \tvec2 clipSpace = toOne - 1.0;\n\n// \treturn clipSpace;\n// }\n\nvoid main() {\n\t// vec2 converted = convertCoords(a_position, u_resolution);\n\t\n\tgl_Position = a_position;\n\tgl_PointSize = 10.0;\n\n\tv_textureCoords = a_textureCoords;\n}"
+	module.exports = "attribute vec2 a_textureCoords;\nattribute vec4 a_position;\n\nvarying vec2 v_textureCoords;\n\nattribute float a_pointSize;\n\nvoid main() {\n\tgl_Position = a_position;\n\tgl_PointSize = 10.0;\n\n\tv_textureCoords = a_textureCoords;\n}"
 
 /***/ }
 /******/ ]);

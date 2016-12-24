@@ -17,10 +17,10 @@ float distortion(float point,float freq, float speed) {
 }
 
 vec2 distortions(vec2 pos) {
-	vec2 intensity = vec2(2.0,1.0) * pixel();
+	vec2 intensity = vec2(1.0,1.0) * pixel();
 
   vec2 waves = vec2(
-    distortion(pos.y,190.0,0.35),
+    distortion(pos.y,100.0,0.35),
     distortion(pos.x,100.0,0.4)
   );
 
@@ -30,7 +30,5 @@ vec2 distortions(vec2 pos) {
 void main() {
 	vec2 distortions = distortions(v_textureCoords);
 
-	vec4 testColor = vec4(1.0,0.0,0.0,1.0);
-
-	gl_FragColor = texture2D(u_sampler, vec2(distortions.x, v_textureCoords.y));
+	gl_FragColor = texture2D(u_sampler, vec2(distortions.x, distortions.y));
 }
