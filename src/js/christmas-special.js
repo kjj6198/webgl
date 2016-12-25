@@ -1,1 +1,6 @@
-createjs.Sound.registerSound("assets/thunder.mp3", soundID);
+// const sound = document.querySelector('audio');
+
+// sound.addEventListener('canplay', (e) => {
+// 	sound.play();
+// });
+
