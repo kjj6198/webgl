@@ -1,0 +1,1 @@
+createjs.Sound.registerSound("assets/thunder.mp3", soundID);

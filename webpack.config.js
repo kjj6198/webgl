@@ -5,6 +5,7 @@ module.exports={
     distortion: "./src/js/index1.js",
     'three-intro': './src/js/three-intro.js',
     'christmas-tree': './src/js/christmas-tree.js',
+    'christmas-special': './src/js/christmas-special.js'
   },
 
   output:{
