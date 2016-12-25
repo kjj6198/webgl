@@ -8,10 +8,20 @@ export default function Tree () {
 	this.body.name = 'tree';
 
 	var geometry = new THREE.ConeGeometry( 10, 20, 17 );
-	
-
 	var material = new THREE.MeshPhongMaterial({color: 0x0d7753, shading: THREE.FlatShading });
 	var cone = new THREE.Mesh( geometry, material );
+
+  var box = new THREE.BoxGeometry(2, 20, 1.5);
+  var boxMaterial = new THREE.MeshPhongMaterial({ color: 0x743300});
+	var boxMesh = new THREE.Mesh(box, boxMaterial);
+	boxMesh.position.set(0,-20, 0);
+
+	for(var i = 0; i < 10; i++) {
+		var redBall = new Ball(1);
+		
+		redBall.mesh.rotation.y = Math.PI / 10 * i;
+		this.body.add(redBall.mesh);
+	}
 	
 	cone.receiveShadow = true;
 	cone.receiveShadow = true;
@@ -25,6 +35,7 @@ export default function Tree () {
 	cone3.scale.set(1.5, 1.5, 1.5);
 	cone3.position.set(0, 0, 0);
 
+	this.body.add(boxMesh);
 	this.body.add(cone);
 	this.body.add(cone2);
 	this.body.add(cone3);
