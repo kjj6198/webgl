@@ -3,7 +3,8 @@ module.exports={
   context: __dirname,
   entry: {
     distortion: "./src/js/index1.js",
-    'three-intro': './src/js/three-intro.js'.
+    'three-intro': './src/js/three-intro.js',
+    'christmas-tree': './src/js/christmas-tree.js',
   },
 
   output:{

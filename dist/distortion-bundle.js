@@ -46,7 +46,7 @@
 
 	'use strict';
 	
-	var _distortion = __webpack_require__(1);
+	var _distortion = __webpack_require__(2);
 	
 	var _distortion2 = _interopRequireDefault(_distortion);
 	
@@ -55,7 +55,8 @@
 	(0, _distortion2.default)(document.querySelector('#distortion'), 'https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcSyZr2LzZi9LX-xgb4ctGwKM3t0bSJKzElnZ2zvjDOoysadwE3csQ');
 
 /***/ },
-/* 1 */
+/* 1 */,
+/* 2 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -65,15 +66,15 @@
 	});
 	exports.default = distortion;
 	
-	var _webgl = __webpack_require__(2);
+	var _webgl = __webpack_require__(3);
 	
 	var WebGL = _interopRequireWildcard(_webgl);
 	
-	var _distoration = __webpack_require__(3);
+	var _distoration = __webpack_require__(4);
 	
 	var _distoration2 = _interopRequireDefault(_distoration);
 	
-	var _vertex = __webpack_require__(4);
+	var _vertex = __webpack_require__(5);
 	
 	var _vertex2 = _interopRequireDefault(_vertex);
 	
@@ -144,7 +145,7 @@
 	  */
 
 /***/ },
-/* 2 */
+/* 3 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -267,13 +268,13 @@
 	}
 
 /***/ },
-/* 3 */
+/* 4 */
 /***/ function(module, exports) {
 
 	module.exports = "precision mediump float;\n\nvarying vec2 v_textureCoords;\n\nuniform float u_time; // pass time to animate.\nuniform sampler2D u_sampler;\nuniform vec2 u_resolution;\n\n\nvec2 pixel() {\n  return 1.0 / u_resolution;\n}\n\n// make position distortion by sin func.\nfloat distortion(float point,float freq, float speed) {\n  return sin(point * freq + ((3.1415/2.0) * u_time * speed));\n}\n\nvec2 distortions(vec2 pos) {\n\tvec2 intensity = vec2(1.0,1.0) * pixel();\n\n  vec2 waves = vec2(\n    distortion(pos.y,100.0,0.35),\n    distortion(pos.x,100.0,0.4)\n  );\n\n  return pos + (waves * intensity * 1.0);\n}\n\nvoid main() {\n\tvec2 distortions = distortions(v_textureCoords);\n\n\tgl_FragColor = texture2D(u_sampler, vec2(distortions.x, distortions.y));\n}"
 
 /***/ },
-/* 4 */
+/* 5 */
 /***/ function(module, exports) {
 
 	module.exports = "attribute vec2 a_textureCoords;\nattribute vec4 a_position;\n\nvarying vec2 v_textureCoords;\n\nattribute float a_pointSize;\n\nvoid main() {\n\tgl_Position = a_position;\n\tgl_PointSize = 10.0;\n\n\tv_textureCoords = a_textureCoords;\n}"
