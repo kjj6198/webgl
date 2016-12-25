@@ -63,13 +63,20 @@
 	var tree = new _Tree2.default();
 	window.snows = new _Snow2.default();
 	
-	var musicBPM = 103;
-	var perNote = 60000 / musicBPM;
 	var sound = document.querySelector('audio');
+	document.addEventListener('keydown', function (e) {
+		sound.play();
+	});
 	
-	// sound.addEventListener('canplay', (e) => {
-	// 	sound.play();
-	// });
+	document.addEventListener('keyup', function (e) {
+		sound.pause();
+	});
+	
+	window.addEventListener('scroll', function (e) {
+		window.scrollTo(0, 0);
+		event.preventDefault();
+		event.stopPropagation();
+	}, false);
 	
 	var scene = new THREE.Scene();
 	window.scene = scene;

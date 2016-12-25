@@ -4,14 +4,22 @@ import Snows from './christmas/Snow.js';
 const tree = new Tree();
 window.snows = new Snows();
 
-const musicBPM = 103;
-const perNote = 60000 / musicBPM;
 const sound = document.querySelector('audio');
+document.addEventListener('keydown', function(e) {
+	sound.play();
+});
+
+document.addEventListener('keyup', function(e) {
+	sound.pause();
+})
+
+window.addEventListener('scroll', function(e) {
+	window.scrollTo(0, 0);
+	event.preventDefault();
+	event.stopPropagation();
+}, false)
 
 
-// sound.addEventListener('canplay', (e) => {
-// 	sound.play();
-// });
 
 const scene = new THREE.Scene();
 window.scene = scene;
