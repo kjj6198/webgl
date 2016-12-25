@@ -61,6 +61,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var tree = new _Tree2.default();
+	window.snows = new _Snow2.default();
 	
 	var musicBPM = 103;
 	var perNote = 60000 / musicBPM;
@@ -96,6 +97,7 @@
 	window.object = {};
 	loader.load('../../assets/star.obj', function (obj) {
 		object = obj;
+	
 		obj.children[2].position.set(0, 28, 5);
 		obj.children[2].material = new THREE.MeshPhongMaterial({ color: 0xF3BB02 });
 		scene.add(obj.children[2]);
@@ -108,6 +110,8 @@
 	function anime() {
 		var star = scene.getObjectByName('tree.star');
 		var tree = scene.getObjectByName('tree');
+		var particles = snows.update();
+		scene.add(particles);
 		tree.rotation.y += Math.PI / 500;
 		star.rotation.y += Math.PI / 100;
 	
@@ -151,13 +155,6 @@
 	
 		var material = new THREE.MeshPhongMaterial({ color: 0x0d7753, shading: THREE.FlatShading });
 		var cone = new THREE.Mesh(geometry, material);
-	
-		for (var i = 0; i < 10; i++) {
-			var redBall = new _Ball2.default(1);
-	
-			// redBall.mesh.rotation.y = Math.PI / 10 * i;
-			this.body.add(redBall.mesh);
-		}
 	
 		cone.receiveShadow = true;
 		cone.receiveShadow = true;
@@ -218,6 +215,11 @@
 
 	'use strict';
 	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.default = SnowSystem;
+	
 	var _snow = __webpack_require__(8);
 	
 	var _snow2 = _interopRequireDefault(_snow);
@@ -228,13 +230,16 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var numParticles = 10000,
-	    width = 100,
-	    height = particleSystemHeight,
-	    depth = 100,
-	    parameters = {
+	var texture = THREE.ImageUtils.loadTexture('../../../assets/snowflake.png');
+	var clock = new THREE.Clock();
+	function SnowSystem() {
+		var numParticles = 1000,
+		    width = 100,
+		    height = window.innerHeight,
+		    depth = 20,
+		    parameters = {
 			color: 0xFFFFFF,
-			height: particleSystemHeight,
+			height: height,
 			radiusX: 2.5,
 			radiusZ: 2.5,
 			size: 100,
@@ -242,28 +247,52 @@
 			opacity: 0.4,
 			speedH: 1.0,
 			speedV: 1.0
-	},
-	    systemGeometry = new THREE.Geometry(),
-	    systemMaterial = new THREE.ShaderMaterial({
+		},
+		    systemGeometry = new THREE.Geometry(),
+		    systemMaterial = new THREE.ShaderMaterial({
 			uniforms: {
-					color: { type: 'c', value: new THREE.Color(parameters.color) },
-					height: { type: 'f', value: parameters.height },
-					elapsedTime: { type: 'f', value: 0 },
-					radiusX: { type: 'f', value: parameters.radiusX },
-					radiusZ: { type: 'f', value: parameters.radiusZ },
-					size: { type: 'f', value: parameters.size },
-					scale: { type: 'f', value: parameters.scale },
-					opacity: { type: 'f', value: parameters.opacity },
-					texture: { type: 't', value: texture },
-					speedH: { type: 'f', value: parameters.speedH },
-					speedV: { type: 'f', value: parameters.speedV }
+				color: { type: 'c', value: new THREE.Color(parameters.color) },
+				height: { type: 'f', value: parameters.height },
+				elapsedTime: { type: 'f', value: 0 },
+				radiusX: { type: 'f', value: parameters.radiusX },
+				radiusZ: { type: 'f', value: parameters.radiusZ },
+				size: { type: 'f', value: parameters.size },
+				scale: { type: 'f', value: parameters.scale },
+				opacity: { type: 'f', value: parameters.opacity },
+				texture: { type: 't', value: texture },
+				speedH: { type: 'f', value: parameters.speedH },
+				speedV: { type: 'f', value: parameters.speedV }
 			},
-			vertexShader: document.getElementById('step07_vs').textContent,
-			fragmentShader: document.getElementById('step09_fs').textContent,
+			vertexShader: _snow4.default,
+			fragmentShader: _snow2.default,
 			blending: THREE.AdditiveBlending,
 			transparent: true,
 			depthTest: false
-	});
+		});
+	
+		function rand(v) {
+			return v * (Math.random() - 0.5);
+		}
+		for (var i = 0; i < numParticles; i++) {
+			var vertex = new THREE.Vector3(rand(width), Math.random() * height, rand(depth));
+			systemGeometry.vertices.push(vertex);
+		}
+		systemGeometry.verticesNeedUpdate = true;
+		var particleSystem = new THREE.Points(systemGeometry, systemMaterial);
+		particleSystem.position.y = -100;
+	
+		this.particles = particleSystem;
+	
+		this.update = function () {
+			var delta = clock.getDelta();
+			var elapsedTime = clock.getElapsedTime();
+			particleSystem.material.uniforms.elapsedTime.value = elapsedTime * 10;
+	
+			return particleSystem;
+		};
+	
+		return this;
+	}
 
 /***/ },
 /* 8 */

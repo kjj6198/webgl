@@ -1,7 +1,8 @@
 import Tree from  './christmas/Tree.js';
 import Ball from './christmas/Ball.js';
-import Snow from './christmas/Snow.js';
+import Snows from './christmas/Snow.js';
 const tree = new Tree();
+window.snows = new Snows();
 
 const musicBPM = 103;
 const perNote = 60000 / musicBPM;
@@ -39,6 +40,7 @@ const loader = new THREE.OBJLoader();
 window.object = {};
 loader.load('../../assets/star.obj', function(obj) {
 	object = obj;
+
 	obj.children[2].position.set(0, 28, 5);
 	obj.children[2].material = new THREE.MeshPhongMaterial({ color: 0xF3BB02})
 	scene.add(obj.children[2]);
@@ -52,11 +54,14 @@ let animationID;
 function anime() {
 	const star = scene.getObjectByName('tree.star');
 	const tree = scene.getObjectByName('tree');
+	const particles = snows.update();
+	scene.add(particles);
 	tree.rotation.y += Math.PI / 500;
 	star.rotation.y += Math.PI / 100;
 
-	renderer.render(scene, camera);
 
+	renderer.render( scene, camera );
+	
 	animationID = requestAnimationFrame(anime);
 }
 

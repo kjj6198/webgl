@@ -13,14 +13,6 @@ export default function Tree () {
 	var material = new THREE.MeshPhongMaterial({color: 0x0d7753, shading: THREE.FlatShading });
 	var cone = new THREE.Mesh( geometry, material );
 	
-
-	for(var i = 0; i < 10; i++) {
-		var redBall = new Ball(1);
-		
-		// redBall.mesh.rotation.y = Math.PI / 10 * i;
-		this.body.add(redBall.mesh);
-	}
-	
 	cone.receiveShadow = true;
 	cone.receiveShadow = true;
 	var cone2 = cone.clone();
