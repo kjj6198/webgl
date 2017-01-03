@@ -1,16 +1,56 @@
-var camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 1000);
+var camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 1100);
 camera.position.z = 20;
 
 var scene = new THREE.Scene();
 var renderer = new THREE.WebGLRenderer();
 
 var container = document.getElementById( 'panorama' );
-var geometry = new THREE.SphereGeometry( 400, 60, 40 );
+var geometry = new THREE.SphereGeometry( 400, 70, 50 );
 
 
 var textureLoader = new THREE.TextureLoader().load('panorama.jpg', draw);
 geometry.scale( -1, 1, 1 );
 
+var lontitude = 0;
+var latitude = 0;
+var pointerX = 0;
+var pointerY = 0;
+
+function registerInteractionEvents() {
+	var on = document.addEventListener.bind(document);
+	var isMousePressed = false;
+
+	on('wheel', function(e) {
+		camera.fov += e.deltaY  * 0.02;
+	}, false);
+
+	window.addEventListener('resize', function() {
+		camera.aspect = window.innerWidth / window.innerHeight;
+
+		renderer.setSize( window.innerWidth, window.innerHeight );
+	}, false);
+
+	on('mousedown', function(e) {
+		isMousePressed = true;
+		pointerX = e.clientX;
+		pointerY = e.clientY;
+	}, false);
+
+	on('mousemove', function(e) {
+		if (isMousePressed) {
+			lontitude = ( pointerX - e.clientX ) * 0.02 + lontitude;
+			latitude = ( e.clientY - pointerY ) * 0.02 + latitude;
+		} 
+
+		return ;
+	}, false);
+
+	on('mouseup', function(e) {
+		isMousePressed = false;
+	}, false);
+}
+
+registerInteractionEvents();
 
 
 function draw(texture) {
@@ -33,12 +73,11 @@ function animate() {
 }
 animate();
 
-var lontitude = 0;
-var latitude = 0;
+
 function update() {
 	lontitude += 0.1;
 	var theta = THREE.Math.degToRad(lontitude);
-	latitude = Math.max( - 85, Math.min( 85, latitude ) );
+	latitude = Math.max( -75, Math.min( 75, latitude ) );
 	var phi = THREE.Math.degToRad( 90 - latitude );
 	
 	camera.lookAt(
