@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Css 3D renderer</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r83/three.min.js"></script>
+	<script src="./js/CSS3DRenderer.js"></script>
+</head>
+<style>
+	.video {
+		position: relative;
+		width: 480px;
+		height: 480px;
+	}
+	.video > iframe {
+		position: absolute;
+	}
+</style>
+<body>
+	<div id="container"></div>
+</body>
+<script>
+	var Video3D = function ( id, x, y, z, ry ) {
+		var div = document.createElement( 'div' );
+		div.className = 'video'
+
+		var iframe = document.createElement( 'iframe' );
+		iframe.style.width = '100%';
+		iframe.style.height = '100%';
+		iframe.style.border = '0';
+		iframe.src = [ 'https://www.youtube.com/embed/', id, '?rel=0' ].join( '' );
+		div.appendChild( iframe );
+
+		var object = new THREE.CSS3DObject( div );
+		object.position.set( x, y, z );
+		object.rotation.y = ry;
+		return object;
+	};
+
+	var container = document.getElementById( 'container' );
+	camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 1, 350 );
+	camera.position.set( 0, 300, 750 );
+
+	scene = new THREE.Scene();
+	renderer = new THREE.CSS3DRenderer();
+
+	renderer.setSize( window.innerWidth, window.innerHeight );
+	renderer.domElement.style.position = 'absolute';
+	renderer.domElement.style.top = 0;
+	container.appendChild( renderer.domElement );
+
+	var group = new THREE.Group();
+	[
+		{
+			id:'J7uFJByUCCc',
+			position: [0,0,240,0]
+	  },
+	  {
+	  	id: 'J7uFJByUCCc',
+	  	position:  [240,0,0, Math.PI / 2]
+	  },
+	  {
+	  	id: 'cRIBCezbUhA',
+	  	position: [0,0,-240,Math.PI],
+	  },
+	  {
+	  	id: 'cRIBCezbUhA',
+	  	position: [-240,0,0,-Math.PI /2]
+	  }
+	].forEach((element) => {
+		group.add(new Video3D(element.id, element.position[0], element.position[1], element.position[2], element.position[3]))
+	})
+
+	scene.add( group );
+	renderer.render(scene, camera);
+
+</script>
+</html>

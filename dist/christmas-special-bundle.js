@@ -46,15 +46,15 @@
 
 	'use strict';
 	
-	var _Tree = __webpack_require__(5);
+	var _Tree = __webpack_require__(1);
 	
 	var _Tree2 = _interopRequireDefault(_Tree);
 	
-	var _Ball = __webpack_require__(6);
+	var _Ball = __webpack_require__(2);
 	
 	var _Ball2 = _interopRequireDefault(_Ball);
 	
-	var _Snow = __webpack_require__(7);
+	var _Snow = __webpack_require__(3);
 	
 	var _Snow2 = _interopRequireDefault(_Snow);
 	
@@ -132,11 +132,7 @@
 	}
 
 /***/ },
-/* 1 */,
-/* 2 */,
-/* 3 */,
-/* 4 */,
-/* 5 */
+/* 1 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -146,7 +142,7 @@
 	});
 	exports.default = Tree;
 	
-	var _Ball = __webpack_require__(6);
+	var _Ball = __webpack_require__(2);
 	
 	var _Ball2 = _interopRequireDefault(_Ball);
 	
@@ -206,7 +202,7 @@
 	};
 
 /***/ },
-/* 6 */
+/* 2 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -229,7 +225,7 @@
 	}
 
 /***/ },
-/* 7 */
+/* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -239,11 +235,11 @@
 	});
 	exports.default = SnowSystem;
 	
-	var _snow = __webpack_require__(8);
+	var _snow = __webpack_require__(4);
 	
 	var _snow2 = _interopRequireDefault(_snow);
 	
-	var _snow3 = __webpack_require__(9);
+	var _snow3 = __webpack_require__(5);
 	
 	var _snow4 = _interopRequireDefault(_snow3);
 	
@@ -314,13 +310,13 @@
 	}
 
 /***/ },
-/* 8 */
+/* 4 */
 /***/ function(module, exports) {
 
 	module.exports = "uniform vec3 color;\nuniform float opacity;\nuniform sampler2D texture;\nvoid main() {\n\tvec4 texColor = texture2D( texture, gl_PointCoord );\n\tgl_FragColor = texColor * vec4( color, opacity );\n}"
 
 /***/ },
-/* 9 */
+/* 5 */
 /***/ function(module, exports) {
 
 	module.exports = "uniform float radiusX;\nuniform float radiusZ;\nuniform float size;\nuniform float scale;\nuniform float height;\nuniform float elapsedTime;\nuniform float speedH;\nuniform float speedV;\nvoid main() {\n\tvec3 pos = position;\n\tpos.x += cos((elapsedTime + position.z) * 0.25 * speedH) * radiusX;\n\tpos.y = mod(pos.y - elapsedTime * speedV, height);\n\tpos.z += sin((elapsedTime + position.x) * 0.25 * speedH) * radiusZ;\n\tvec4 mvPosition = modelViewMatrix * vec4( pos, 1.0 );\n\tgl_PointSize = size * ( scale / length( mvPosition.xyz ) );\n\tgl_Position = projectionMatrix * mvPosition;\n}"
