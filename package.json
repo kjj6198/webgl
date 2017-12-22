@@ -1,4 +1,8 @@
 {
+  "scripts": {
+    "start": "gulp connect",
+    "webpack": "webpack --watch"
+  },
   "dependencies": {
     "babel-core": "^6.21.0",
     "babel-loader": "^6.2.10",

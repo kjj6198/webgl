@@ -67,8 +67,8 @@ export function createProgram(gl, vertexScript, fragScript) {
   console.info('current program linked status:', linked);
 
   if (!linked) {
-      var lastError = gl.getProgramInfoLog(program);
-      
+      const error = gl.getProgramInfoLog(program);
+      console.log(error);
       gl.deleteProgram(program);
       return null;
   }

@@ -1,8 +1,3 @@
-/*
- * [TODO] make this function more reusable.
- * you can extract it to interface like createProgram
- * combine program... etc.
-*/
 import * as WebGL from '../webgl-util/webgl.js';
 
 import frag from '../../shader/distoration.frag';

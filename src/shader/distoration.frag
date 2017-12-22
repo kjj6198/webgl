@@ -20,8 +20,8 @@ vec2 distortions(vec2 pos) {
 	vec2 intensity = vec2(1.0,1.0) * pixel();
 
   vec2 waves = vec2(
-    distortion(pos.y,100.0,0.35),
-    distortion(pos.x,100.0,0.4)
+    distortion(pos.y, 100.0, 0.35),
+    distortion(pos.x, 100.0, 0.4)
   );
 
   return pos + (waves * intensity * 1.0);

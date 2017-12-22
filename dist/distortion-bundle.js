@@ -142,11 +142,7 @@
 	
 			gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 		}
-	} /*
-	   * [TODO] make this function more reusable.
-	   * you can extract it to interface like createProgram
-	   * combine program... etc.
-	  */
+	}
 
 /***/ },
 /* 7 */
@@ -234,8 +230,8 @@
 	  console.info('current program linked status:', linked);
 	
 	  if (!linked) {
-	    var lastError = gl.getProgramInfoLog(program);
-	
+	    var error = gl.getProgramInfoLog(program);
+	    console.log(error);
 	    gl.deleteProgram(program);
 	    return null;
 	  }
@@ -275,7 +271,7 @@
 /* 8 */
 /***/ function(module, exports) {
 
-	module.exports = "precision mediump float;\n\nvarying vec2 v_textureCoords;\n\nuniform float u_time; // pass time to animate.\nuniform sampler2D u_sampler;\nuniform vec2 u_resolution;\n\n\nvec2 pixel() {\n  return 1.0 / u_resolution;\n}\n\n// make position distortion by sin func.\nfloat distortion(float point,float freq, float speed) {\n  return sin(point * freq + ((3.1415/2.0) * u_time * speed));\n}\n\nvec2 distortions(vec2 pos) {\n\tvec2 intensity = vec2(1.0,1.0) * pixel();\n\n  vec2 waves = vec2(\n    distortion(pos.y,100.0,0.35),\n    distortion(pos.x,100.0,0.4)\n  );\n\n  return pos + (waves * intensity * 1.0);\n}\n\nvoid main() {\n\tvec2 distortions = distortions(v_textureCoords);\n\n\tgl_FragColor = texture2D(u_sampler, vec2(distortions.x, distortions.y));\n}"
+	module.exports = "precision mediump float;\n\nvarying vec2 v_textureCoords;\n\nuniform float u_time; // pass time to animate.\nuniform sampler2D u_sampler;\nuniform vec2 u_resolution;\n\n\nvec2 pixel() {\n  return 1.0 / u_resolution;\n}\n\n// make position distortion by sin func.\nfloat distortion(float point,float freq, float speed) {\n  return sin(point * freq + ((3.1415/2.0) * u_time * speed));\n}\n\nvec2 distortions(vec2 pos) {\n\tvec2 intensity = vec2(1.0,1.0) * pixel();\n\n  vec2 waves = vec2(\n    distortion(pos.y, 100.0, 0.35),\n    distortion(pos.x, 100.0, 0.4)\n  );\n\n  return pos + (waves * intensity * 1.0);\n}\n\nvoid main() {\n\tvec2 distortions = distortions(v_textureCoords);\n\n\tgl_FragColor = texture2D(u_sampler, vec2(distortions.x, distortions.y));\n}"
 
 /***/ },
 /* 9 */
